@@ -1,0 +1,119 @@
+Nmap Usage Guide
+
+A simple repository to document essential and practical Nmap commands for penetration testing, bug bounty, and network reconnaissance.
+
+This project is designed for beginners and intermediate users who want a clean and organized reference for using Nmap effectively.
+
+⸻
+
+📌 What is Nmap?
+
+Nmap (Network Mapper) is an open-source tool used for:
+	•	Network scanning
+	•	Port discovery
+	•	Service & version detection
+	•	Vulnerability scanning
+	•	Host discovery
+	•	Security auditing
+
+📁 Repository Structure
+nmap-usage/
+│
+├── README.md
+├── scans/
+│   ├── basic-scan.txt
+│   ├── service-version.txt
+│   ├── vuln-scan.txt
+│   ├── scripts/
+│   │   └── list-of-useful-scripts.txt
+│   └── outputs/
+│       └── sample-output.xml
+
+1. Basic Scans
+
+Scan a single target:
+nmap 192.168.1.10
+
+Scan multiple targets:
+nmap 192.168.1.10 192.168.1.20
+
+Scan an entire network:
+nmap 192.168.1.0/24
+
+Scan from a list:
+nmap -iL targets.txt
+
+2. Port Scanning
+
+Fast scan (top 100 ports):
+nmap -F <target>
+
+Scan all 65,535 ports:
+nmap -p- <target>
+
+Scan specific ports:
+nmap -p 22,80,443 <target>
+
+3. Service & Version Detection
+
+Identify services & versions:
+nmap -sV <target>
+
+Aggressive scan:
+nmap -A <target>
+
+4. OS Detection
+
+nmap -O <target>
+
+Better accuracy:
+nmap -O --osscan-guess <target>
+
+5. Using Nmap Scripts (NSE)
+
+List available scripts:
+ls /usr/share/nmap/scripts/
+
+Run a script:
+nmap --script http-title <target>
+
+Run multiple scripts (http category):
+nmap --script "http-*" <target>
+
+Vulnerability scan:
+nmap --script vuln <target>
+
+6. Output Format
+
+Normal output:
+nmap <target> -oN scan.txt
+
+XML output:
+nmap <target> -oX output.xml
+
+All formats:
+nmap <target> -oA scan
+
+7. Useful Examples
+
+Find live hosts:
+nmap -sn 192.168.1.0/24
+
+Find open ports + versions:
+nmap -sV -p- <target>
+
+Firewall evasion:
+nmap -Pn <target>
+
+8. Wordlists & Script Collection
+
+http-title
+http-methods
+http-vuln-cve2017-5638
+ftp-anon
+mysql-info
+smb-os-discovery
+
+Contributing
+
+Feel free to submit improvements by opening a pull request!
