@@ -29,91 +29,33 @@ nmap-usage/
 │   └── outputs/
 │       └── sample-output.xml
 
-1. Basic Scans
 
-Scan a single target:
-nmap 192.168.1.10
-
-Scan multiple targets:
-nmap 192.168.1.10 192.168.1.20
-
-Scan an entire network:
-nmap 192.168.1.0/24
-
-Scan from a list:
-nmap -iL targets.txt
-
-2. Port Scanning
-
-Fast scan (top 100 ports):
-nmap -F <target>
-
-Scan all 65,535 ports:
-nmap -p- <target>
-
-Scan specific ports:
-nmap -p 22,80,443 <target>
-
-3. Service & Version Detection
-
-Identify services & versions:
-nmap -sV <target>
-
-Aggressive scan:
-nmap -A <target>
-
-4. OS Detection
-
-nmap -O <target>
-
-Better accuracy:
-nmap -O --osscan-guess <target>
-
-5. Using Nmap Scripts (NSE)
-
-List available scripts:
-ls /usr/share/nmap/scripts/
-
-Run a script:
-nmap --script http-title <target>
-
-Run multiple scripts (http category):
-nmap --script "http-*" <target>
-
-Vulnerability scan:
-nmap --script vuln <target>
-
-6. Output Format
-
-Normal output:
-nmap <target> -oN scan.txt
-
-XML output:
-nmap <target> -oX output.xml
-
-All formats:
-nmap <target> -oA scan
-
-7. Useful Examples
-
-Find live hosts:
+1. Host Discovery
+# Ping scan only (discover live hosts)
 nmap -sn 192.168.1.0/24
 
-Find open ports + versions:
-nmap -sV -p- <target>
+# Disable ping (treat all hosts as online)
+nmap -Pn 192.168.1.10
 
-Firewall evasion:
-nmap -Pn <target>
 
-8. Wordlists & Script Collection
 
-http-title
-http-methods
-http-vuln-cve2017-5638
-ftp-anon
-mysql-info
-smb-os-discovery
+2. Port Scanning
+# Fast scan (top 100 ports)
+nmap -F <target>
 
-Contributing
+# Scan all 65,535 ports
+nmap -p- <target>
 
-Feel free to submit improvements by opening a pull request!
+# Scan specific ports
+nmap -p 22,80,443 <target>
+
+# Scan a port range
+nmap -p 1-1000 <target>
+
+
+3. Service & Version Detection
+# Basic service version scan
+nmap -sV <target>
+
+# Aggressive scan (version + OS + traceroute)
+nmap -A <target>
