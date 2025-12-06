@@ -16,3 +16,65 @@ A practical collection of cybersecurity notes, labs, workflows, and scripts focu
 - Advanced Web exploitation (SQLi, XSS, SSRF, etc.)
 - SIEM detection engineering & log correlation
 - NIST & ISO 27001 practical mapping
+
+Nmap Usage Guide
+
+A simple repository to document essential and practical Nmap commands for penetration testing, bug bounty, and network reconnaissance.
+
+This project is designed for beginners and intermediate users who want a clean and organized reference for using Nmap effectively.
+
+⸻
+
+📌 What is Nmap?
+
+Nmap (Network Mapper) is an open-source tool used for:
+	•	Network scanning
+	•	Port discovery
+	•	Service & version detection
+	•	Vulnerability scanning
+	•	Host discovery
+	•	Security auditing
+
+📁 Repository Structure
+nmap-usage/
+│
+├── README.md
+├── scans/
+│   ├── basic-scan.txt
+│   ├── service-version.txt
+│   ├── vuln-scan.txt
+│   ├── scripts/
+│   │   └── list-of-useful-scripts.txt
+│   └── outputs/
+│       └── sample-output.xml
+
+
+1. Host Discovery
+# Ping scan only (discover live hosts)
+nmap -sn 192.168.1.0/24
+
+# Disable ping (treat all hosts as online)
+nmap -Pn 192.168.1.10
+
+
+
+2. Port Scanning
+# Fast scan (top 100 ports)
+nmap -F <target>
+
+# Scan all 65,535 ports
+nmap -p- <target>
+
+# Scan specific ports
+nmap -p 22,80,443 <target>
+
+# Scan a port range
+nmap -p 1-1000 <target>
+
+
+3. Service & Version Detection
+# Basic service version scan
+nmap -sV <target>
+
+# Aggressive scan (version + OS + traceroute)
+nmap -A <target>
