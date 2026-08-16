@@ -272,29 +272,32 @@ echo 'ENCODED_VALUE' | base64 -D
 
 ## 11. Pelajaran yang Didapat
 
-Poin utama dari challenge ini sebenarnya bukan sekadar "prompt injection itu ada" — itu udah bukan berita baru. Masalah yang lebih dalam sifatnya arsitektural: **sebuah aksi privileged nggak boleh diotorisasi cuma karena sebuah language model yang nggak terpercaya memutuskan bahwa sepotong teks dianggap sebagai otorisasi.**
+Menurut saya, hal paling menarik dari challenge ini bukan cuma fakta bahwa prompt injection bisa dieksploitasi. Masalah sebenarnya ada di cara aplikasi mempercayai output dari LLM untuk menjalankan aksi yang seharusnya punya batasan akses sendiri.
 
-Otorisasi harus ditegakkan oleh logika aplikasi yang deterministik, terikat pada principal yang sudah terautentikasi dan token atau capability yang eksplisit — bukan disimpulkan oleh model dari konteks percakapan. Tool call juga harus diisolasi, di-allowlist, dan dicegah menyentuh file sensitif kecuali aplikasinya sendiri sudah memverifikasi secara independen bahwa si pemanggil memang berhak melakukan itu.
+Kalau sebuah model bisa dipengaruhi oleh input dari user, maka hasil keputusan model seharusnya tidak pernah dianggap sebagai bukti bahwa user memang punya izin untuk melakukan suatu aksi. Validasi seperti itu tetap harus dilakukan oleh aplikasi, berdasarkan user yang sudah terautentikasi dan permission yang memang dimiliki user tersebut.
 
-Beberapa takeaway konkret buat siapa pun yang membangun sistem serupa:
+Hal yang sama berlaku untuk tool yang bisa dipanggil oleh LLM. Tool seharusnya hanya menyediakan fungsi yang memang diperlukan, dengan permission dan batasan yang jelas. Akses ke file atau resource sensitif juga seharusnya divalidasi oleh aplikasi, bukan hanya mengandalkan keputusan model.
+Security Takeaways
 
-- Jauhkan tool privileged dari jangkauan langsung model.
-- Perlakukan semua argumen tool hasil generate model sebagai input yang nggak terpercaya.
-- Tegakkan otorisasi di kode aplikasi, jangan pernah di dalam prompt.
-- Hindari mekanisme stateful semacam "otorisasi request berikutnya" yang bisa dipengaruhi input user.
-- Terapkan filtering output *sebelum* data sensitif sampai ke model atau user — dan pastikan filter itu nggak bisa dibypass semudah cuma dengan re-encode.
-- Jalankan backend service dengan akun least-privilege dan permission filesystem yang ketat.
-- Log dan beri alert untuk pemanggilan tool privileged yang nggak wajar.
-- Jangan expose environment variable internal ke workflow yang bisa dijangkau input yang nggak terpercaya.
+Dari challenge ini, ada beberapa hal yang menurut saya cukup penting kalau sedang membangun aplikasi yang menggunakan AI agent:
 
----
+* Jangan memberikan tool dengan akses privileged secara langsung tanpa pembatasan yang jelas.
+* Anggap semua parameter yang dihasilkan oleh model sebagai input yang belum tentu aman.
+* Pengecekan authorization harus dilakukan oleh aplikasi, bukan diserahkan ke prompt atau keputusan model.
+* Hati-hati dengan state seperti “request berikutnya akan diizinkan”, karena state semacam ini bisa menjadi jalur bypass kalau user bisa memengaruhinya.
+* Kalau aplikasi melakukan filtering terhadap output, filtering tersebut harus dilakukan sebelum data sensitif diberikan ke model atau user. Jangan mengandalkan encoding sederhana sebagai satu-satunya lapisan perlindungan.
+* Backend tetap harus berjalan dengan privilege seminimal mungkin dan permission filesystem yang sesuai.
+* Pemanggilan tool privileged yang tidak biasa sebaiknya dicatat dan bisa dijadikan bahan untuk alerting.
+* Jangan memberikan environment variable atau secret internal kepada workflow yang bisa dipengaruhi oleh input user.
 
-## 12. Kesimpulan
+Conclusion
 
-Challenge The Guestbook adalah contoh bagus soal gimana sebuah form feedback yang kelihatannya nggak berbahaya bisa berubah jadi execution path privileged, begitu sebuah AI agent diizinkan menginterpretasikan konten yang dikontrol user dan bertindak berdasarkan itu lewat tool.
+The Guestbook menurut saya adalah contoh yang bagus tentang bagaimana fitur yang kelihatannya sederhana, seperti form feedback, bisa berubah menjadi jalur menuju aksi privileged ketika AI agent diberi kemampuan untuk membaca input user dan menjalankan tool berdasarkan input tersebut.
 
-Momen "aha"-nya adalah waktu nemuin mekanisme otorisasi berbasis "entri berikutnya" tadi. Begitu state transition itu ke-klik, sisanya tinggal dirantai: enumerasi environment, temukan path vault, lalu ambil flag-nya lewat trik encoding yang berhasil lolos dari filter output.
+Bagian yang paling menarik buat saya adalah ketika menemukan mekanisme authorization yang bergantung pada “entri berikutnya”. Setelah memahami bagaimana state tersebut bekerja, jalurnya mulai terlihat jelas: enumerasi environment, mencari lokasi vault, lalu mencari cara mengambil flag tanpa terkena filtering yang diterapkan aplikasi.
 
-Yang intinya balik lagi ke satu prinsip keamanan yang penting buat diingat:
+Pada akhirnya, challenge ini bukan cuma tentang menemukan prompt injection. Yang lebih penting adalah melihat di mana kepercayaan ditempatkan oleh aplikasi. Kalau keputusan dari LLM bisa menentukan apakah sebuah aksi privileged boleh dilakukan, maka prompt injection bisa berubah dari sekadar manipulasi output menjadi masalah authorization.
 
-> Jangan pernah biarkan instruksi berbahasa natural menjadi batas otorisasi untuk operasi-operasi yang privileged.
+Prinsip yang paling saya bawa dari challenge ini:
+
+Jangan jadikan instruksi bahasa natural sebagai batas keamanan untuk operasi yang privileged.
