@@ -1,24 +1,28 @@
-Nmap Usage Guide
+# Nmap Usage Guide
 
 A simple repository to document essential and practical Nmap commands for penetration testing, bug bounty, and network reconnaissance.
 
 This project is designed for beginners and intermediate users who want a clean and organized reference for using Nmap effectively.
 
-⸻
+---
 
-📌 What is Nmap?
+## 📌 What is Nmap?
 
-Nmap (Network Mapper) is an open-source tool used for:
-	•	Network scanning
-	•	Port discovery
-	•	Service & version detection
-	•	Vulnerability scanning
-	•	Host discovery
-	•	Security auditing
+**Nmap (Network Mapper)** is an open-source tool used for:
 
-📁 Repository Structure
+- Network scanning
+- Port discovery
+- Service & version detection
+- Vulnerability scanning
+- Host discovery
+- Security auditing
+
+---
+
+## 📁 Repository Structure
+
+```text
 nmap-usage/
-│
 ├── README.md
 ├── scans/
 │   ├── basic-scan.txt
@@ -28,34 +32,76 @@ nmap-usage/
 │   │   └── list-of-useful-scripts.txt
 │   └── outputs/
 │       └── sample-output.xml
+```
 
+---
 
-1. Host Discovery
-# Ping scan only (discover live hosts)
+## 1. Host Discovery
+
+### Ping Scan
+
+Discover live hosts without performing a port scan:
+
+```bash
 nmap -sn 192.168.1.0/24
+```
 
-# Disable ping (treat all hosts as online)
+### Disable Host Discovery
+
+Treat all hosts as online:
+
+```bash
 nmap -Pn 192.168.1.10
+```
 
+---
 
+## 2. Port Scanning
 
-2. Port Scanning
-# Fast scan (top 100 ports)
+### Fast Scan
+
+Scan the top 100 ports:
+
+```bash
 nmap -F <target>
+```
 
-# Scan all 65,535 ports
+### Scan All Ports
+
+Scan all 65,535 TCP ports:
+
+```bash
 nmap -p- <target>
+```
 
-# Scan specific ports
+### Scan Specific Ports
+
+```bash
 nmap -p 22,80,443 <target>
+```
 
-# Scan a port range
+### Scan a Port Range
+
+```bash
 nmap -p 1-1000 <target>
+```
 
+---
 
-3. Service & Version Detection
-# Basic service version scan
+## 3. Service & Version Detection
+
+### Service Version Detection
+
+Detect services and their versions:
+
+```bash
 nmap -sV <target>
+```
 
-# Aggressive scan (version + OS + traceroute)
+### Aggressive Scan
+
+Enable OS detection, version detection, script scanning, and traceroute:
+
+```bash
 nmap -A <target>
+```
