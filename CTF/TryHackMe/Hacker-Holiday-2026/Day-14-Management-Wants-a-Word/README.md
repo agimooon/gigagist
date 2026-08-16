@@ -274,7 +274,7 @@ Flag yang berhasil ditemukan:
 THM[1t_w4s...AlOng?!}
 ```
 
-*(Sengaja disensor sebagian — kalau kamu ngerjain challenge ini sendiri, flag lengkap baru akan muncul di terminal kamu.)*
+*(Sengaja disensor sebagian ya gess.)*
 
 Yang menarik, flag ini nggak ketemu lewat `strings`, metadata, text extraction, attachment, maupun JavaScript. Flag-nya justru bersembunyi di dalam gambar invoice.
 
