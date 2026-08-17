@@ -9,11 +9,11 @@
 
 ## Ringkasan
 
-Room ini adalah boot2root dua flag (user + root). Brief-nya sendiri ngasih clue soal pivoting:
+Room ini adalah boot2root dua flag (user + root). Brief-nya ngasih clue soal pivoting:
 
 > "No visible edge. You trace the network to the horizon and find three systems nobody told you about on the other side."
 
-Alur lengkapnya kira-kira begini: command injection di aplikasi web publik → dapat foothold → nemu tiga service internal yang cuma bisa diakses dari loopback → kredensial bocor berantai dari satu service ke service lain → login ke FreePBX UCP → nemu automation key yang disembunyikan di widget Voicemail → command injection kedua, kali ini sebagai root.
+Alur lengkapnya seperti ini: command injection di aplikasi web publik → dapat foothold → nemu tiga service internal yang cuma bisa diakses dari loopback → kredensial bocor berantai dari satu service ke service lain → login ke FreePBX UCP → nemu automation key yang disembunyikan di widget Voicemail → command injection kedua, kali ini sebagai root.
 
 ---
 
