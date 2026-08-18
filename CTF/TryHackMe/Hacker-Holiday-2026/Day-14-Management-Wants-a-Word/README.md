@@ -8,9 +8,9 @@
 
 ## Pendahuluan — Jejak yang Tersembunyi
 
-Challenge **Management Wants a Word** ini kelihatannya sederhana di awal, tapi ternyata butuh ketelitian yang lebih dari sekadar "cari file, buka, baca isinya".
+Challenge **Management Wants a Word** ini kelihatannya sederhana di awal, tapi ternyata butuh waktu dan ketelitian yang lebih dari sekadar "mencari file, lalu buka dan baca isinya".
 
-Yang tersedia di awal investigasi cuma sebuah hasil backup dari KAPE. Di dalamnya ada satu file bernama `backup` yang sepintas nggak kelihatan seperti file biasa. Setelah ditelusuri lebih jauh, ternyata itu adalah sebuah container yang cuma bisa dibuka lewat VeraCrypt.
+Yang tersedia di awal investigasi cuma sebuah hasil backup dari KAPE. Di dalamnya kita perlu eksplor lebih banyak untuk mencari apakah ada file yang mencurigakan dan dari ada banyak folder dan file itu ada satu file bernama `backup` yang sepintas nggak kelihatan seperti file biasa. Setelah ditelusuri lebih jauh, ternyata itu adalah sebuah container yang cuma bisa dibuka lewat VeraCrypt.
 
 Dari titik itu, saya coba perlakukan setiap artefak sebagai bagian dari satu cerita yang berurutan: temukan file, verifikasi integritasnya, buka container-nya, inventarisasi isinya, lalu cari hubungan antar dokumen yang ditemukan.
 
@@ -237,7 +237,7 @@ Nah, arah investigasi berubah di sini. Kalau teksnya nggak tersedia sebagai text
 
 Karena PDF-nya ternyata berbasis gambar, langkah berikutnya jalan Optical Character Recognition (OCR).
 
-Kalau Tesseract belum terpasang di macOS, install dulu lewat Homebrew:
+Kalau Tesseract belum terpasang, berikut instalasi lewat Homebrew:
 
 ```bash
 brew install tesseract
@@ -278,17 +278,17 @@ THM[1t_w4s...AlOng?!}
 
 Yang menarik, flag ini nggak ketemu lewat `strings`, metadata, text extraction, attachment, maupun JavaScript. Flag-nya justru bersembunyi di dalam gambar invoice.
 
-Inilah kenapa pendekatan bertahap itu penting. Kalau investigasi berhenti begitu `pdftotext` atau `strings` nggak nemu apa-apa, flag-nya bakal kelewat gitu aja.
+Inilah kenapa pendekatan bertahap itu penting. Kalau investigasi berhenti begitu `pdftotext` atau `strings` nggak ditemukan apa-apa, sehingga flag-nya bisa terlewat begitu saja.
 
 ---
 
 ## 9. Lessons Learned
 
-Challenge ini ngasih beberapa pelajaran yang relevan buat kerjaan digital forensics.
+Challenge ini ada beberapa pelajaran yang relevan buat kerjaan digital forensics.
 
-Pertama, jangan anggap ekstensi file sebagai gambaran lengkap dari isinya. Sebuah PDF bisa aja isinya cuma gambar, tanpa text layer yang berguna sama sekali.
+Pertama, jangan anggap ekstensi file sebagai gambaran lengkap dari isinya. Ekstensi sebuah file dapat dimodif agar tidak terlihat mencurigakan. Sebuah PDF bisa aja isinya cuma gambar, tanpa text layer yang berguna sama sekali.
 
-Kedua, kegagalan sebuah tool bukan berarti artefaknya kosong. Waktu `pdftotext` nggak menghasilkan teks apa pun, langkah selanjutnya bukan nyerah, tapi memahami struktur PDF-nya dan cari objek lain di dalamnya.
+Kedua, kegagalan sebuah tool bukan berarti artefaknya kosong. Waktu `pdftotext` nggak menghasilkan teks apa pun, langkah selanjutnya bukan berhenti, tapi memahami struktur PDF-nya dan cari objek lain di dalamnya.
 
 Ketiga, konteks antar-artefak itu penting. CSV-nya sendiri nggak berisi flag, tapi dia bantu mengonfirmasi hubungan dengan Byte Lotus Resorts, yang jadi petunjuk buat fokus ke invoice.
 
@@ -298,7 +298,7 @@ Terakhir, investigasi forensik yang baik jalan kayak proses eliminasi. Setiap pe
 
 ## 10. Alur Investigasi
 
-Secara keseluruhan, alurnya kira-kira begini:
+Secara keseluruhan, alurnya kurang lebih seperti ini:
 
 1. Menemukan backup di struktur KAPE.
 2. Mengidentifikasi tipe file backup.
