@@ -9,7 +9,7 @@
 
 ## Ringkasan
 
-Room ini adalah boot2root dua flag (user + root). Brief-nya ngasih clue soal pivoting:
+Room ini adalah boot2root dua flag (user + root). Brief-nya terlihat ada clue soal pivoting:
 
 > "No visible edge. You trace the network to the horizon and find three systems nobody told you about on the other side."
 
