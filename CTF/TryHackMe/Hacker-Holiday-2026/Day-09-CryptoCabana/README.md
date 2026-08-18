@@ -9,7 +9,7 @@
 
 ## Ringkasan
 
-Situs "CryptoCabana" nawarin fitur backup seed phrase crypto. Tujuan challenge ini adalah menelusuri rantai kepercayaan (trust chain) dari static website → Azure Storage Account → kredensial Service Principal → Azure Key Vault, sampai akhirnya dapetin flag yang tersembunyi di versi lama sebuah secret yang sudah di-rotate.
+Situs "CryptoCabana" nawarin fitur backup seed phrase crypto. Tujuan challenge ini adalah menelusuri rantai kepercayaan (trust chain) dari static website → Azure Storage Account → kredensial Service Principal → Azure Key Vault, sampai akhirnya menemukan flag yang tersembunyi di versi lama sebuah secret yang sudah di-rotate.
 
 ---
 
@@ -151,4 +151,3 @@ THM{n0t_ur...c01ns!}
 
 - `curl` — enumerasi Azure Blob Storage REST API langsung (list container, list blob, download blob) lewat SAS token
 - **Azure CLI** (`az`) — autentikasi service principal & enumerasi Azure Key Vault
-- **Homebrew** (`brew install azure-cli`) — instalasi Azure CLI di macOS
