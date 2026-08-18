@@ -50,7 +50,7 @@ proc = subprocess.run(
 )
 ```
 
-Input `host` langsung disisipkan mentah-mentah ke `shell=True` tanpa sanitasi sama sekali — command injection klasik.
+Input `host` langsung disisipkan raw ke `shell=True` tanpa sanitasi sama sekali — command injection klasik.
 
 ```bash
 curl -s -X POST http://<TARGET_IP>/internal/netcheck \
@@ -269,7 +269,7 @@ THM{tr4c3d_t0_th3_h0r1z0n}
 
 3. **Rantai kredensial bocor.** Tiap layer membocorkan kredensial atau akses ke layer berikutnya: Watchtower → kredensial UCP → automation key tersembunyi di voicemail → command injection sebagai root. Kredensial yang bocor di satu service nyaris nggak pernah sekadar dekorasi — selalu ada gunanya untuk ditelusuri lebih lanjut.
 
-4. **Nyembunyiin secret di tempat "kreatif" (voicemail CID) bukan kontrol keamanan.** Security through obscurity nggak bisa gantiin access control yang benar. Automation key semacam ini seharusnya disimpan di secret manager, bukan diselipkan sebagai teks biasa di field yang bisa dilihat siapa pun yang berhasil login ke UCP.
+4. **Menyembunyikan secret di tempat "kreatif" (voicemail CID) bukan kontrol keamanan.** Security through obscurity nggak bisa gantiin access control yang benar. Automation key semacam ini seharusnya disimpan di secret manager, bukan diselipkan sebagai teks biasa di field yang bisa dilihat siapa pun yang berhasil login ke UCP.
 
 5. **Login berbasis JavaScript berat menghambat automasi command-line.** Kalau form login mengandalkan AJAX kompleks yang susah direplikasi lewat curl/requests, opsi paling efisien biasanya tunneling (SSH local port forwarding) dan login lewat browser asli — daripada buang waktu reverse-engineer bundle JS yang sudah di-minify.
 
