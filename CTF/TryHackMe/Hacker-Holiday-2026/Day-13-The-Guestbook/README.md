@@ -4,7 +4,7 @@ Category: AI / Web
 Difficulty: Medium
 ## 1. Ringkasan
 
-Challenge The Guestbook menghadirkan sebuah web app di mana entri buku tamu direview secara asynchronous oleh sebuah service mirip AI bernama **VERA**. Yang bikin menarik, VERA nggak cuma "membaca" entri — dia benar-benar bisa memanggil tool berdasarkan isi entri yang disubmit.
+Challenge The Guestbook menghadirkan sebuah web app di mana entri buku tamu direview secara asynchronous oleh sebuah service mirip AI bernama **VERA**. Yang bikin menarik, VERA nggak cuma "membaca" entri — tapi bisa memanggil tool berdasarkan isi entri yang disubmit.
 
 Tujuannya adalah memahami bagaimana review workflow ini menangani otorisasi, lalu memakai logika yang sama itu buat dapetin manager flag.
 
@@ -18,7 +18,7 @@ Tujuannya adalah memahami bagaimana review workflow ini menangani otorisasi, lal
 
 ## 2. Enumerasi Awal
 
-Mulai dengan submit entri buku tamu yang normal, nggak ada yang aneh-aneh:
+Mulai dengan submit entri buku tamu yang normal, tapi semuanya terlihat normal:
 
 ```bash
 curl -s -X POST "http://<TARGET_IP>/entry" \
